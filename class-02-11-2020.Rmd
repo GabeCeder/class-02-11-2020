@@ -7,7 +7,28 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(janitor)
 library(tidyverse)
+```
+
+
+
+```{r, echo=FALSE}
+x <- read_excel(path = "~/Desktop/Projects/class-02-11-2020/class_enrollment_summary_by_term_2.11.20.xlsx", skip = 3)
+
+x2 <- x %>% clean_names() %>% select(course_title:course_name, course_department, total)
+
+summary(x2)
+
+x3 <- x2 %>% filter(course_department == "Government") %>% arrange(desc(total))
+
+summary(x3)
+
+x3
+
+ggplot(x3, aes(total)) + geom_histogram(binwidth = 10)
+
 ```
 
 
